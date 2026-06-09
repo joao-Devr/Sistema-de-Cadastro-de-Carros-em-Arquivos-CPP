@@ -13,6 +13,52 @@ struct Carro
    string descricao;
 };
 
+int Busca_binaria_numero(Carro vetor[], int inicio, int fim, int procurado) {     
+
+   int valor_meio;
+   
+   if (inicio <= fim){
+        int meio = (inicio+fim)/2;
+
+         while (vetor[meio].id < 0 && meio < fim)
+            meio++;
+
+        if (vetor[meio].id < 0) return -1;
+
+         valor_meio = vetor[meio].id;
+
+        if (procurado > valor_meio)
+            return Busca_binaria_numero(vetor,meio+1,fim,procurado);
+
+        else if (procurado < valor_meio)
+
+            return Busca_binaria_numero(vetor,inicio,meio-1,procurado);
+
+        else
+            return meio;
+    }
+    return -1;
+}
+
+int Busca_binaria_string(Carro vetor[], int inicio, int fim, string procurado) {
+    if (inicio <= fim) {
+        int meio = (inicio + fim) / 2;
+
+        while (vetor[meio].id < 0 && meio < fim) meio++;
+        if (vetor[meio].id < 0) return -1;
+
+        string valor_meio = vetor[meio].nome;
+
+        if (procurado > valor_meio)
+            return Busca_binaria_string(vetor, meio+1, fim, procurado);
+        else if (procurado < valor_meio)
+            return Busca_binaria_string(vetor, inicio, meio-1, procurado);
+        else
+            return meio;
+    }
+    return -1;
+}
+
 int main()
 {
     int id=0,ano,opc,inicial=0,final=0;
@@ -141,7 +187,49 @@ int main()
         }
         break;
 
-        case 3:{ cout<<"em construção..."<<endl;
+        case 3:{ 
+               int resultado;
+               Carro* cpesquisa = new Carro[tamanho];
+                        for(int i=0;i<tamanho;i++){
+
+                        cpesquisa[i] = carros[i];
+                     }
+               cout<<"Como deseja buscar o veiculo?"<<endl;
+               cout<<"1. Por ID"<<endl;
+               cout<<"2. Por nome"<<endl;
+               int opcao;
+               cin>>opcao;
+                  if(opcao==1){
+
+                        //ordenar por ID
+
+                     cout<<"Digite o ID do carro que deseja buscar: "<<endl;
+                     int id_procurar;
+                     cin>>id_procurar;
+                     resultado = Busca_binaria_numero(cpesquisa, 0, tamanho-1, id_procurar);
+                  }
+                  if(opcao==2){
+
+                           //ordenar por nome
+
+                     cout<<"Digite o nome do carro que deseja buscar: "<<endl;
+                     string nome_procurar;
+                     cin.ignore();
+                     getline(cin, nome_procurar);
+                     resultado = Busca_binaria_string(cpesquisa, 0, tamanho-1, nome_procurar);
+                  }
+
+                        if(resultado==-1)
+                           cout<<"Carro nao encontrado."<<endl;
+
+                        else{
+                           cout<<"Carro encontrado: "<<endl;
+                           cout << "Carro do ID " << cpesquisa[resultado].id << ": " << cpesquisa[resultado].nome << endl;
+                           cout << "Marca: " << cpesquisa[resultado].marca << endl;
+                           cout << "Ano: " << cpesquisa[resultado].ano << endl;
+                           cout << "Descricao: " << cpesquisa[resultado].descricao << endl;
+                        }
+                  
         }
         break;
 
