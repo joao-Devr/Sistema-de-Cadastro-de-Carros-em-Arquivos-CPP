@@ -15,7 +15,7 @@ struct Carro
 
 int main()
 {
-    int id=0,ano,opc;
+    int id=0,ano,opc,inicial=0,final=0;
       string nome, marca, descricao;
    
    ifstream Lista_carros("C:\\Users\\Usuario\\Desktop\\EUUU\\Projeto-pratico-IALG\\carro.csv");
@@ -36,7 +36,6 @@ int main()
    while (Lista_carros >> id)
    {  
       carros[tamanho].id=id;
-      cout<<"id: "<<carros[tamanho].id<<endl;
       Lista_carros >> lixo;
       getline(Lista_carros,carros[tamanho].nome,';');
       getline(Lista_carros,carros[tamanho].marca,';');
@@ -70,8 +69,8 @@ int main()
      {
       cout<<"-----------------------------"<<endl;
       cout<<"Escolha uma opcao: "<<endl;  
-      cout<<"1. Cadastrar veiculo (informa nome, marca,ano e descrição (cor) )"<<endl;
-      cout<<"2. Listar veiculos (imprime nome, marca, ano e descrição de todos os veiculos)"<<endl;
+      cout<<"1. Cadastrar veiculo (informa nome, marca,ano e descricao (cor) )"<<endl;
+      cout<<"2. Listar veiculos (imprime nome, marca, ano e descricao de todos os veiculos)"<<endl;
       cout<<"3. Buscar Veiculo "<<endl;
       cout<<"4. Ordenar "<<endl;
       cout<<"5. Apagar Veiculo "<<endl;
@@ -114,8 +113,24 @@ int main()
         break;
 
         case 2:{   
+                  cout<<"Deseja listar os carros em um intervalo? "<<endl;
+                  cout<<"1. Sim"<<endl;
+                  cout<<"2. Nao"<<endl;
+                  int opcao;
+                  cin>>opcao;
+                  if(opcao==1){
+                      cout<<"Digite o inicio do intervalo: "<<endl;
+                      cin>>inicial;
+                      cout<<"Digite o final do intervalo: "<<endl;
+                      cin>>final;
+                  }
+                  else{
+                      inicial=0;
+                      final=tamanho;
+                  }
 
-               for(int i = 0; i<tamanho; i++){
+               for(int i = inicial; i<final; i++){
+                  if (carros[i].id < 0) continue;
                   cout<<"-----------------------------"<<endl;
                   cout << "Carro do ID " << carros[i].id << ": " << carros[i].nome << endl;
                   cout << "Marca: " << carros[i].marca << endl;
@@ -126,17 +141,33 @@ int main()
         }
         break;
 
-        case 3:{
+        case 3:{ cout<<"em construção..."<<endl;
         }
         break;
 
-        case 4: {
+        case 4: { cout<<"em construção..."<<endl;
         }
          break;
-         case 5: {
+         case 5: { 
+                  cout<<"Digite o ID do carro que deseja apagar: "<<endl;
+                  int id_apagar;
+                  cin>>id_apagar;
+
+                     bool encontrado = false;
+                        for (int i = 0; i < tamanho; i++) {
+
+                           if (carros[i].id == id_apagar) {
+
+                                 carros[i].id = -carros[i].id;
+                                 cout << "Carro removido com sucesso!" << endl;
+                                 encontrado = true;
+                                 break;}
+                        }
+                           if (!encontrado)
+                              cout << "ID nao encontrado." << endl;
          }
          break;
-         case 6: {
+         case 6: { cout<<"em construção..."<<endl;
          }
          break;
          case 7: cout<<"Saindo..."<<endl;
