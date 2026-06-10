@@ -295,7 +295,27 @@ int main()
                               cout << "ID nao encontrado." << endl;
          }
          break;
-         case 6: { cout<<"em construção..."<<endl;
+         case 6: { 
+            // cria o csv 
+            ofstream arquivo_saida("carro.csv");
+            if (!arquivo_saida.is_open()) {
+                cout << "Erro ao abrir o arquivo para salvar!" << endl;
+            } else {
+                // escreve o cabecalho
+                arquivo_saida << "#id;nome;marca;ano_de_lançamento;descrição\n";
+                for (int i = 0; i < tamanho; i++) {
+                    // ignora os apagados
+                    if (carros[i].id > 0) {
+                        arquivo_saida << carros[i].id << ";"
+                                      << carros[i].nome << ";"
+                                      << carros[i].marca << ";"
+                                      << carros[i].ano << ";\""
+                                      << carros[i].descricao << "\"\n";
+                    }
+                }
+                cout << "Alteracoes salvas com sucesso no arquivo carro.csv!" << endl;
+                arquivo_saida.close();
+            }
          }
          break;
          case 7: cout<<"Saindo..."<<endl;
