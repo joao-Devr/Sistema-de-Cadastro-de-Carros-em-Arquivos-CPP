@@ -13,6 +13,32 @@ struct Carro
    string descricao;
 };
 
+// adiciona o insertion sort 
+void InsertionSort_ID(Carro vetor[], int tamanho) {
+    for (int i = 1; i < tamanho; i++) {
+        Carro chave = vetor[i];
+        int j = i - 1;
+        while (j >= 0 && vetor[j].id > chave.id) {
+            vetor[j + 1] = vetor[j];
+            j = j - 1;
+        }
+        vetor[j + 1] = chave;
+    }
+}
+
+// função pra ordenar por nome
+void InsertionSort_Nome(Carro vetor[], int tamanho) {
+    for (int i = 1; i < tamanho; i++) {
+        Carro chave = vetor[i];
+        int j = i - 1;
+        while (j >= 0 && vetor[j].nome > chave.nome) {
+            vetor[j + 1] = vetor[j];
+            j = j - 1;
+        }
+        vetor[j + 1] = chave;
+    }
+}
+
 int Busca_binaria_numero(Carro vetor[], int inicio, int fim, int procurado) {     
 
    int valor_meio;
@@ -64,7 +90,8 @@ int main()
     int id=0,ano,opc,inicial=0,final=0;
       string nome, marca, descricao;
    
-   ifstream Lista_carros("C:\\Users\\Usuario\\Desktop\\EUUU\\Projeto-pratico-IALG\\carro.csv");
+   // tirei o "C:\\Users...." p funcionar no linux
+   ifstream Lista_carros("carro.csv");
 
    // Verifica se o arquivo foi aberto corretamente
    if (!Lista_carros.is_open()){
@@ -124,8 +151,8 @@ int main()
       cout<<"7. Sair"<<endl;
       cin>>opc;
 
-     switch(opc){
-        case 1:{
+      switch(opc){
+         case 1:{
          cout<<"digite um nome"<<endl;
         cin>>nome;
         cout<<"digite uma marca"<<endl;
@@ -148,7 +175,7 @@ int main()
         delete[] carros;
         carros=cTemp;
       }
-     
+      
         carros[tamanho].id=tamanho+1;
         carros[tamanho].nome=nome;
         carros[tamanho].marca=marca;
@@ -200,18 +227,16 @@ int main()
                int opcao;
                cin>>opcao;
                   if(opcao==1){
-
-                        //ordenar por ID
-
+                     //chamando a ordenação antes da busca
+                     InsertionSort_ID(cpesquisa, tamanho);
                      cout<<"Digite o ID do carro que deseja buscar: "<<endl;
                      int id_procurar;
                      cin>>id_procurar;
                      resultado = Busca_binaria_numero(cpesquisa, 0, tamanho-1, id_procurar);
                   }
                   if(opcao==2){
-
-                           //ordenar por nome
-
+                     
+                     InsertionSort_Nome(cpesquisa, tamanho);
                      cout<<"Digite o nome do carro que deseja buscar: "<<endl;
                      string nome_procurar;
                      cin.ignore();
@@ -229,11 +254,26 @@ int main()
                            cout << "Ano: " << cpesquisa[resultado].ano << endl;
                            cout << "Descricao: " << cpesquisa[resultado].descricao << endl;
                         }
-                  
+                  delete[] cpesquisa;
         }
         break;
 
-        case 4: { cout<<"em construção..."<<endl;
+        case 4: { 
+            cout<<"Como deseja ordenar os veiculos?"<<endl;
+            cout<<"1. Por ID"<<endl;
+            cout<<"2. Por Nome"<<endl;
+            int opcao_ord;
+            cin >> opcao_ord;
+            
+            if(opcao_ord == 1){
+                InsertionSort_ID(carros, tamanho);
+                cout << "Veiculos ordenados por ID com sucesso!" << endl;
+            } else if(opcao_ord == 2){
+                InsertionSort_Nome(carros, tamanho);
+                cout << "Veiculos ordenados por Nome com sucesso!" << endl;
+            } else {
+                cout << "Opcao invalida." << endl;
+            }
         }
          break;
          case 5: { 
@@ -260,8 +300,9 @@ int main()
          break;
          case 7: cout<<"Saindo..."<<endl;
          break;
-     }
+      }
 }while(opc!=7);
 
+   delete[] carros;
    return 0;
 }
