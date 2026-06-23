@@ -1,3 +1,9 @@
+/*
+ Equipe: Guilherme Oliveira de Brito Silva, David Marques Alves de Jesus, João Pedro Campolina Rodrigues
+ Turma: 10A - Professora Marluce
+ Tema: Sistema de Cadastro de Veículos (carro.csv)
+ */
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -202,13 +208,15 @@ int main()
                       final=tamanho;
                   }
 
+//troquei o continue por if
                for(int i = inicial; i<final; i++){
-                  if (carros[i].id < 0) continue;
-                  cout<<"-----------------------------"<<endl;
-                  cout << "Carro do ID " << carros[i].id << ": " << carros[i].nome << endl;
-                  cout << "Marca: " << carros[i].marca << endl;
-                  cout << "Ano: " << carros[i].ano << endl;
-                  cout << "Descricao: " << carros[i].descricao << endl;
+                  if (carros[i].id > 0) {
+                     cout<<"-----------------------------"<<endl;
+                     cout << "Carro do ID " << carros[i].id << ": " << carros[i].nome << endl;
+                     cout << "Marca: " << carros[i].marca << endl;
+                     cout << "Ano: " << carros[i].ano << endl;
+                     cout << "Descricao: " << carros[i].descricao << endl;
+                  }
                }
 
         }
@@ -282,14 +290,15 @@ int main()
                   cin>>id_apagar;
 
                      bool encontrado = false;
-                        for (int i = 0; i < tamanho; i++) {
+//tirei o break do for
+                        for (int i = 0; i < tamanho && !encontrado; i++) {
 
                            if (carros[i].id == id_apagar) {
 
                                  carros[i].id = -carros[i].id;
                                  cout << "Carro removido com sucesso!" << endl;
                                  encontrado = true;
-                                 break;}
+                                 }
                         }
                            if (!encontrado)
                               cout << "ID nao encontrado." << endl;
