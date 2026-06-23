@@ -96,7 +96,7 @@ int main()
     int id=0,ano,opc,inicial=0,final=0;
       string nome, marca, descricao;
    
-   ifstream Lista_carros("C://Users//Usuario//Desktop//EUUU//Projeto-pratico-IALG//carro.csv");
+   ifstream Lista_carros("carro.csv");
 
    // Verifica se o arquivo foi aberto corretamente
    if (!Lista_carros.is_open()){
@@ -327,7 +327,7 @@ int main()
          break;
          case 6: { 
             // cria o csv 
-            ofstream arquivo_saida("C://Users//Usuario//Desktop//EUUU//Projeto-pratico-IALG//carro.csv");
+            ofstream arquivo_saida("carro.csv");
             if (!arquivo_saida.is_open()) {
                 cout << "Erro ao abrir o arquivo para salvar!" << endl;
             } else {
