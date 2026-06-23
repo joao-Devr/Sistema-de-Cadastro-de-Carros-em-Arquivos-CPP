@@ -96,7 +96,7 @@ int main()
     int id=0,ano,opc,inicial=0,final=0;
       string nome, marca, descricao;
    
-   ifstream Lista_carros("carro.csv");
+   ifstream Lista_carros("C://Users//Usuario//Desktop//EUUU//Projeto-pratico-IALG//carro.csv");
 
    // Verifica se o arquivo foi aberto corretamente
    if (!Lista_carros.is_open()){
@@ -222,6 +222,7 @@ int main()
 
         case 3:{ 
                int resultado;
+               string nome_procurar;
                Carro* cpesquisa = new Carro[tamanho];
                         for(int i=0;i<tamanho;i++){
 
@@ -244,24 +245,46 @@ int main()
                      
                      InsertionSort_Nome(cpesquisa, tamanho);
                      cout<<"Digite o nome do carro que deseja buscar: "<<endl;
-                     string nome_procurar;
+                    
                      cin.ignore();
                      getline(cin, nome_procurar);
                      resultado = Busca_binaria_string(cpesquisa, 0, tamanho-1, nome_procurar);
                   }
 
-                        if(resultado==-1)
+                  if(resultado==-1)
                            cout<<"Carro nao encontrado."<<endl;
 
-                        else{
-                           cout<<"Carro encontrado: "<<endl;
-                           cout << "Carro do ID " << cpesquisa[resultado].id << ": " << cpesquisa[resultado].nome << endl;
-                           cout << "Marca: " << cpesquisa[resultado].marca << endl;
-                           cout << "Ano: " << cpesquisa[resultado].ano << endl;
-                           cout << "Descricao: " << cpesquisa[resultado].descricao << endl;
+                  else{
+                           // Encontra o PRIMEIRO com esse nome (expande para cima)
+                           int inicio = resultado;
+                           while(inicio > 0 && cpesquisa[inicio-1].id > 0 && 
+                                 cpesquisa[inicio-1].nome == nome_procurar){
+                              inicio--;
+                           }
+                           
+                           // Encontra o ÚLTIMO com esse nome (expande para baixo)
+                           int fim = resultado;
+                           while(fim < tamanho-1 && cpesquisa[fim+1].id > 0 && 
+                                 cpesquisa[fim+1].nome == nome_procurar){
+                              fim++;
+                           }
+                           
+                           // Imprime todos encontrados
+                           int quantidade = fim - inicio + 1;
+                           cout<<"Encontrados " << quantidade << " carro(s):"<<endl;
+                           
+                           for(int i = inicio; i <= fim; i++){
+                              if(cpesquisa[i].id > 0){  // Verifica se não foi deletado
+                                          
+                           cout << "Carro do ID " << cpesquisa[i].id << ": " << cpesquisa[i].nome << endl;
+                           cout << "Marca: " << cpesquisa[i].marca << endl;
+                           cout << "Ano: " << cpesquisa[i].ano << endl;
+                           cout << "Descricao: " << cpesquisa[i].descricao << endl;
+                              }
                         }
+                  }
                   delete[] cpesquisa;
-        }
+               }
         break;
 
         case 4: { 
@@ -304,7 +327,7 @@ int main()
          break;
          case 6: { 
             // cria o csv 
-            ofstream arquivo_saida("carro.csv");
+            ofstream arquivo_saida("C://Users//Usuario//Desktop//EUUU//Projeto-pratico-IALG//carro.csv");
             if (!arquivo_saida.is_open()) {
                 cout << "Erro ao abrir o arquivo para salvar!" << endl;
             } else {
