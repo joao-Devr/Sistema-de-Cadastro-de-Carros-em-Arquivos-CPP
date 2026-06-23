@@ -96,7 +96,6 @@ int main()
     int id=0,ano,opc,inicial=0,final=0;
       string nome, marca, descricao;
    
-   // tirei o "C:\\Users...." p funcionar no linux
    ifstream Lista_carros("carro.csv");
 
    // Verifica se o arquivo foi aberto corretamente
@@ -208,7 +207,6 @@ int main()
                       final=tamanho;
                   }
 
-//troquei o continue por if
                for(int i = inicial; i<final; i++){
                   if (carros[i].id > 0) {
                      cout<<"-----------------------------"<<endl;
@@ -290,7 +288,7 @@ int main()
                   cin>>id_apagar;
 
                      bool encontrado = false;
-//tirei o break do for
+          
                         for (int i = 0; i < tamanho && !encontrado; i++) {
 
                            if (carros[i].id == id_apagar) {
